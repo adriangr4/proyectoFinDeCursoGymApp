@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Workout Routine Details</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1c2636",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hide for cleaner UI */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display min-h-screen flex flex-col overflow-hidden antialiased selection:bg-primary selection:text-white">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 flex items-center justify-between p-4 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md pt-safe-top border-b border-gray-200 dark:border-white/5">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-2xl">arrow_back_ios_new</span>
+</button>
+<h2 class="text-lg font-bold tracking-tight">Leg Day</h2>
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-primary">
+<span class="material-symbols-outlined text-2xl">edit</span>
+</button>
+</header>
+<!-- Scrollable Main Content -->
+<main class="flex-1 overflow-y-auto no-scrollbar pb-32">
+<!-- Progress Section -->
+<div class="px-6 pt-4 pb-2">
+<div class="flex justify-between items-end mb-2">
+<span class="text-sm font-medium text-slate-500 dark:text-slate-400">Routine Progress</span>
+<span class="text-primary font-bold">0%</span>
+</div>
+<div class="h-2 w-full bg-slate-200 dark:bg-surface-dark rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[5%] rounded-full"></div>
+</div>
+</div>
+<!-- Routine Header Info -->
+<div class="px-6 py-6">
+<h1 class="text-3xl md:text-4xl font-extrabold leading-tight mb-4">Leg Day<br/><span class="text-primary">Destroyer</span></h1>
+<!-- Metadata Chips -->
+<div class="flex flex-wrap gap-3">
+<div class="flex items-center gap-2 bg-white dark:bg-surface-dark px-4 py-2 rounded-full border border-slate-200 dark:border-white/5 shadow-sm">
+<span class="material-symbols-outlined text-primary text-sm">timer</span>
+<span class="text-sm font-medium">60 Min</span>
+</div>
+<div class="flex items-center gap-2 bg-white dark:bg-surface-dark px-4 py-2 rounded-full border border-slate-200 dark:border-white/5 shadow-sm">
+<span class="material-symbols-outlined text-primary text-sm">equalizer</span>
+<span class="text-sm font-medium">Intermediate</span>
+</div>
+<div class="flex items-center gap-2 bg-white dark:bg-surface-dark px-4 py-2 rounded-full border border-slate-200 dark:border-white/5 shadow-sm">
+<span class="material-symbols-outlined text-primary text-sm">local_fire_department</span>
+<span class="text-sm font-medium">450 kcal</span>
+</div>
+</div>
+<p class="mt-6 text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
+                Focus on hypertrophy and strength. Keep rest periods between 90-120 seconds for compound lifts.
+            </p>
+</div>
+<!-- Exercises List Header -->
+<div class="px-6 py-2 flex items-center justify-between">
+<h3 class="text-lg font-bold">Exercises (5)</h3>
+<button class="text-xs font-semibold text-primary uppercase tracking-wider">Reorder</button>
+</div>
+<!-- Exercise Cards -->
+<div class="flex flex-col gap-4 px-4 mt-2">
+<!-- Card 1 -->
+<div class="group relative flex items-center gap-4 bg-white dark:bg-surface-dark p-3 rounded-2xl border border-slate-200 dark:border-white/5 shadow-sm hover:border-primary/50 transition-all cursor-pointer">
+<!-- Thumbnail -->
+<div class="shrink-0 size-20 rounded-xl bg-slate-100 dark:bg-black/40 overflow-hidden relative">
+<img alt="Person performing a barbell squat in a gym setting" class="w-full h-full object-cover opacity-90 group-hover:scale-110 transition-transform duration-500" data-alt="Barbell Squat Exercise" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCESAeELrgMeG2KZ0cbkqaNM4cY0TcYW2-U3FJ3xa4Q3KDxiOWqowjMWWn_pF50cVErtAqxESge-PdV3-JCwRDo18pjDHWh1fgRN6dxcrdA30y41Xb0OKFEs6NjgeLC7_Ana5g_ENNWyfX5or1Zp6O5J66FZRIq65g7036wpRio8YXRg9ywVUIyzpcOMZlsXi6jTzuxNPvlb0xajV3SuVhBQZQVmqdPFBQBBOMYU7uS_27fFlfrE0r-tvca_iAh0v44IkukTAhxm6H6"/>
+<div class="absolute inset-0 bg-primary/10"></div>
+</div>
+<!-- Details -->
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="text-base font-bold truncate pr-2">Barbell Squat</h4>
+<span class="material-symbols-outlined text-slate-400 hover:text-primary text-xl" style="font-variation-settings: 'FILL' 0;">info</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-2">Quadriceps • Compound</p>
+<div class="flex items-center gap-3">
+<div class="bg-slate-100 dark:bg-background-dark px-2 py-1 rounded text-xs font-semibold text-slate-700 dark:text-slate-300">
+                            4 Sets
+                        </div>
+<div class="bg-slate-100 dark:bg-background-dark px-2 py-1 rounded text-xs font-semibold text-slate-700 dark:text-slate-300">
+                            8-10 Reps
+                        </div>
+<div class="text-xs font-bold text-primary">
+                            135 lbs
+                        </div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative flex items-center gap-4 bg-white dark:bg-surface-dark p-3 rounded-2xl border border-slate-200 dark:border-white/5 shadow-sm hover:border-primary/50 transition-all cursor-pointer">
+<div class="shrink-0 size-20 rounded-xl bg-slate-100 dark:bg-black/40 overflow-hidden relative">
+<img alt="Leg press machine in a modern gym" class="w-full h-full object-cover opacity-90 group-hover:scale-110 transition-transform duration-500" data-alt="Leg Press Exercise" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXK7HpTBkG8BiMNjrWu0NqW6IS23QXyJRe1gAQC7aGAOxOWMl3E8_SR6yDZdfTImUnKDnCO-QdvHxhQGQfjpXIPHybpFIwDN3Gk4y_PpHkr1DxHCnQMezasVWXcmQPtbPeoDhlFc6SJ9Uh9INmjz3mlahCU5BTwESOPU_FUKJXScEXWxICcoITkJ3Y_qRlM2kyCTL4axTYdkwNPkBnR2sKjuQIV1GeiPbcDzQEqK-O-nI8fdtA8ZQEy-pRjoCCI7kul6hzfpd1iGAU"/>
+<div class="absolute inset-0 bg-primary/10"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="text-base font-bold truncate pr-2">Leg Press</h4>
+<span class="material-symbols-outlined text-slate-400 hover:text-primary text-xl" style="font-variation-settings: 'FILL' 0;">info</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-2">Quadriceps • Machine</p>
+<div class="flex items-center gap-3">
+<div class="bg-slate-100 dark:bg-background-dark px-2 py-1 rounded text-xs font-semibold text-slate-700 dark:text-slate-300">3 Sets</div>
+<div class="bg-slate-100 dark:bg-background-dark px-2 py-1 rounded text-xs font-semibold text-slate-700 dark:text-slate-300">12 Reps</div>
+<div class="text-xs font-bold text-primary">200 lbs</div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group relative flex items-center gap-4 bg-white dark:bg-surface-dark p-3 rounded-2xl border border-slate-200 dark:border-white/5 shadow-sm hover:border-primary/50 transition-all cursor-pointer">
+<div class="shrink-0 size-20 rounded-xl bg-slate-100 dark:bg-black/40 overflow-hidden relative">
+<img alt="Man lifting weights doing deadlifts" class="w-full h-full object-cover opacity-90 group-hover:scale-110 transition-transform duration-500" data-alt="Romanian Deadlift Exercise" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBT5OhyymDdu4HOyFjcT2bDc9D8q4mx9rTtPkvFKrzVKLPtbV3NI7h2zEgAVWlZkZl_a51BI_xNgsDbwU6q8dz2FEXtIA0bdCUFl17KhvLZPl_ucqvgB_DNZEQsUIsFP2-rUlMjQYKxIZw4umVkbOqHZyhxCbajDGOt8VIEb5SoSbQrImPiYrgHmaScp309HBxsXfMLSHMS2LpEg189nIZLKDz2ggHPIILCQlZhrQiX_pa0JdjMUgFMrcqHttvkiyhCGAEZXdb30H6K"/>
+<div class="absolute inset-0 bg-primary/10"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="text-base font-bold truncate pr-2">Romanian Deadlift</h4>
+<span class="material-symbols-outlined text-slate-400 hover:text-primary text-xl" style="font-variation-settings: 'FILL' 0;">info</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-2">Hamstrings • Compound</p>
+<div class="flex items-center gap-3">
+<div class="bg-slate-100 dark:bg-background-dark px-2 py-1 rounded text-xs font-semibold text-slate-700 dark:text-slate-300">3 Sets</div>
+<div class="bg-slate-100 dark:bg-background-dark px-2 py-1 rounded text-xs font-semibold text-slate-700 dark:text-slate-300">10 Reps</div>
+<div class="text-xs font-bold text-primary">185 lbs</div>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="group relative flex items-center gap-4 bg-white dark:bg-surface-dark p-3 rounded-2xl border border-slate-200 dark:border-white/5 shadow-sm hover:border-primary/50 transition-all cursor-pointer">
+<div class="shrink-0 size-20 rounded-xl bg-slate-100 dark:bg-black/40 overflow-hidden relative">
+<img alt="Close up of legs doing lunges" class="w-full h-full object-cover opacity-90 group-hover:scale-110 transition-transform duration-500" data-alt="Walking Lunges Exercise" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9aw4V-eF5AzGiApeF3hZMJaZqzS5AZoNn1_NvILOhQilF_wfuRqyNlm7V4FySGJCIFsAa3-RVd8OlOGUpgbIn8rCrFEffehq67VQNg7JeF_p-jFFhAV160BH5g7vVbDvyIK5hc6t0CtTvwCHwPaa7L94SHxYUKzkJOtCwBe_3oaP-cAI66-jhDLtwkxHkdlVSXgQKGUE4JSY6qJEAIUPNm1NB1Qe1bNLRZay7TWaHUiWAVsM0iiZ9H0SPGf9hddaMlT95Fkr152hK"/>
+<div class="absolute inset-0 bg-primary/10"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="text-base font-bold truncate pr-2">Walking Lunges</h4>
+<span class="material-symbols-outlined text-slate-400 hover:text-primary text-xl" style="font-variation-settings: 'FILL' 0;">info</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-2">Glutes • Accessory</p>
+<div class="flex items-center gap-3">
+<div class="bg-slate-100 dark:bg-background-dark px-2 py-1 rounded text-xs font-semibold text-slate-700 dark:text-slate-300">3 Sets</div>
+<div class="bg-slate-100 dark:bg-background-dark px-2 py-1 rounded text-xs font-semibold text-slate-700 dark:text-slate-300">24 Reps</div>
+<div class="text-xs font-bold text-primary">40 lbs</div>
+</div>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="group relative flex items-center gap-4 bg-white dark:bg-surface-dark p-3 rounded-2xl border border-slate-200 dark:border-white/5 shadow-sm hover:border-primary/50 transition-all cursor-pointer">
+<div class="shrink-0 size-20 rounded-xl bg-slate-100 dark:bg-black/40 overflow-hidden relative">
+<img alt="Legs in workout gear lifting weights" class="w-full h-full object-cover opacity-90 group-hover:scale-110 transition-transform duration-500" data-alt="Calf Raises Exercise" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpNeCHe9JQRhsBRUy2KykJQAC72WaR2iaGloRHx3nNZWrrAfGkde3ym8GdaBZPK5x14KG2NRQv7SVMOGCNvV6cgvK4oQCeeEd5FHNIQllU0NnCtkz-zcyx86KGFFqhicijKvL8Lg9k1I8UT3348weZEILes3UasJDZkfKrscEkezylJBOnJEB6lPZAQq9T0xkxGc_2qDbLjOeKmxdILShAvINKso1pL9U1FN-X8bExnQbiAF6pU6oMV3B3d3UEo4wucPFsoLohYH27"/>
+<div class="absolute inset-0 bg-primary/10"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="text-base font-bold truncate pr-2">Calf Raises</h4>
+<span class="material-symbols-outlined text-slate-400 hover:text-primary text-xl" style="font-variation-settings: 'FILL' 0;">info</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-2">Calves • Accessory</p>
+<div class="flex items-center gap-3">
+<div class="bg-slate-100 dark:bg-background-dark px-2 py-1 rounded text-xs font-semibold text-slate-700 dark:text-slate-300">4 Sets</div>
+<div class="bg-slate-100 dark:bg-background-dark px-2 py-1 rounded text-xs font-semibold text-slate-700 dark:text-slate-300">15 Reps</div>
+<div class="text-xs font-bold text-slate-500 dark:text-slate-400">BW</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Fixed Footer CTA -->
+<div class="fixed bottom-0 left-0 w-full p-4 bg-gradient-to-t from-background-light via-background-light to-transparent dark:from-background-dark dark:via-background-dark pt-12 pb-8">
+<button class="w-full flex items-center justify-center gap-3 bg-primary hover:bg-blue-600 active:scale-[0.98] text-white text-lg font-bold py-4 rounded-full shadow-lg shadow-primary/30 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+            Start Workout
+        </button>
+</div>
+</body></html>
