@@ -1,4 +1,5 @@
-import requests
+import unicodedata
+from firebase_admin import firestore as firebase_firestore
 from starlette.concurrency import run_in_threadpool
 from fastapi import APIRouter, Depends, HTTPException, Query
 from typing import List, Any
@@ -6,7 +7,6 @@ from app.api.deps import get_current_user
 from app.schemas.user import User
 from app.schemas.diet import DietPlan, DietPlanCreate, FoodItem
 from app.core.config import settings
-from firebase_admin import firestore
 import uuid
 from datetime import datetime
 
@@ -14,7 +14,12 @@ router = APIRouter()
 
 # Firestore collection reference
 def get_diets_ref():
-    return firestore.client().collection('diets')
+    return firebase_firestore.client().collection('diets')
+
+def normalize(text: str) -> str:
+    """Lowercase and remove accents for flexible search."""
+    nfkd = unicodedata.normalize('NFD', text.lower())
+    return ''.join(c for c in nfkd if not unicodedata.combining(c))
 
 @router.get("/search", response_model=List[FoodItem])
 async def search_food(
@@ -22,60 +27,67 @@ async def search_food(
     page: int = 1
 ):
     """
-    Search for food in OpenFoodFacts API (proxy).
+    Search for food in the local Firestore 'foods' database.
+    Falls back to a generic item if nothing is found.
     """
-    # Use 'es' subdomain for better reliability and localization
-    url = "https://es.openfoodfacts.org/cgi/search.pl"
-    params = {
-        "search_terms": q,
-        "search_simple": 1,
-        "action": "process",
-        "json": 1,
-        "page": page,
-        "page_size": 20,
-        "fields": "product_name,brands,image_url,nutriments,code,serving_size"
-    }
-    
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-    }
-    
-    
-    try:
-        def fetch():
-            return requests.get(url, params=params, headers=headers, timeout=20.0)
-            
-        response = await run_in_threadpool(fetch)
-        response.raise_for_status()
-        data = response.json()
+    def _search():
+        db = firebase_firestore.client()
+        q_normalized = normalize(q)
         
+        # Firestore doesn't support full-text search, so we:
+        # 1. Try exact prefix match on search_name field
+        # 2. Also fetch all and filter in-memory (collection is small ~100-200 items)
         results = []
-        for product in data.get('products', []):
-            # Extract nutriments (default to 100g)
-            nutriments = product.get('nutriments', {})
-            
-            # Skip items without basic calorie info
-            if 'energy-kcal_100g' not in nutriments and 'energy-kcal' not in nutriments:
-                continue
+        
+        all_foods = db.collection('foods').stream()
+        for doc in all_foods:
+            data = doc.to_dict()
+            food_name_norm = normalize(data.get('name', ''))
+            # Match if query appears anywhere in the food name
+            if q_normalized in food_name_norm:
+                results.append(data)
+        
+        # Sort by relevance: exact starts-with first, then contains
+        results.sort(key=lambda x: (0 if normalize(x['name']).startswith(q_normalized) else 1, x['name']))
+        
+        # Pagination
+        page_size = 20
+        start = (page - 1) * page_size
+        return results[start:start + page_size]
+    
+    foods = await run_in_threadpool(_search)
+    
+    if not foods:
+        # Return a single generic item so UI doesn't show empty
+        return [FoodItem(
+            name=f"{q.capitalize()} (Genérico)",
+            brand="Sin marca",
+            calories=100,
+            protein=5,
+            carbs=10,
+            fat=2,
+            image_url="",
+            barcode="",
+            quantity=100,
+            serving_size="100g"
+        )]
+    
+    return [
+        FoodItem(
+            name=f.get('name', 'Alimento'),
+            brand=f.get('category', ''),
+            calories=f.get('calories', 0),
+            protein=f.get('protein', 0),
+            carbs=f.get('carbs', 0),
+            fat=f.get('fat', 0),
+            image_url=f.get('image_url', ''),
+            barcode=f.get('id', ''),
+            quantity=f.get('quantity', 100),
+            serving_size=f.get('serving_size', '100g')
+        )
+        for f in foods
+    ]
 
-            item = FoodItem(
-                name=product.get('product_name', 'Unknown'),
-                brand=product.get('brands', ''),
-                calories=nutriments.get('energy-kcal_100g', nutriments.get('energy-kcal', 0)),
-                protein=nutriments.get('proteins_100g', 0),
-                carbs=nutriments.get('carbohydrates_100g', 0),
-                fat=nutriments.get('fat_100g', 0),
-                image_url=product.get('image_url', ''),
-                barcode=product.get('code', ''),
-                quantity=100, # default reference 100g
-                serving_size=product.get('serving_size', '100g')
-            )
-            results.append(item)
-            
-        return results
-    except Exception as e:
-        print(f"Error fetching from OpenFoodFacts: {repr(e)}")
-        raise HTTPException(status_code=502, detail="Error searching external food database")
 
 @router.post("/", response_model=DietPlan)
 async def create_diet_plan(

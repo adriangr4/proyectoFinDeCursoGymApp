@@ -15,6 +15,7 @@ class PostBase(BaseModel):
     likes: List[str] = []
     rating_sum: float = 0.0
     rating_count: int = 0
+    comment_count: int = 0
 
 class PostCreate(PostBase):
     pass
@@ -40,5 +41,21 @@ class Rating(RatingBase):
     rater_id: str
     created_at: datetime
     
+    class Config:
+        from_attributes = True
+
+# --- COMMENTS ---
+class CommentCreate(BaseModel):
+    text: str
+
+class Comment(BaseModel):
+    id: str
+    post_id: str
+    author_id: str
+    author_name: str
+    author_avatar: Optional[str] = None
+    text: str
+    created_at: datetime
+
     class Config:
         from_attributes = True

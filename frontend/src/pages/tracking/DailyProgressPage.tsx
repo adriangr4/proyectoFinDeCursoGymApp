@@ -18,7 +18,7 @@ export function DailyProgressPage() {
     const progress = Math.min(100, (totalCalories / (dashboardStats?.calories_target || 600)) * 100);
 
     return (
-        <div className="min-h-screen bg-transparent pb-20 text-white p-6 pt-8">
+        <div className="min-h-screen bg-transparent pb-20 text-foreground p-6 pt-8">
             <div className="flex items-center gap-4 mb-8">
                 <button onClick={() => navigate(-1)} className="p-2 bg-card rounded-full hover:bg-muted transition-colors">
                     <ArrowLeft className="size-6" />

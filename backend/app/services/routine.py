@@ -51,39 +51,30 @@ class CRUDRoutine(CRUDBase[Routine, RoutineCreate, RoutineUpdate]):
         return routine_dict
 
     def get_multi_with_exercises(self, db: firestore.Client, *, creator_id: str = None, skip: int = 0, limit: int = 100) -> List[Dict]:
-        # routines = self.get_multi(db, skip=skip, limit=limit)
         docs_collection = {}
-        try:
-            # 1. Fetch user's routines (fallback to unsorted if index missing)
-            if creator_id:
-                try:
-                    q1 = db.collection(self.collection_name).where("creator_id", "==", creator_id).order_by("created_at", direction=firestore.Query.DESCENDING).limit(limit).stream()
-                    for d in q1:
-                        docs_collection[d.id] = d.to_dict()
-                except Exception:
-                    q1 = db.collection(self.collection_name).where("creator_id", "==", creator_id).stream()
-                    for d in q1:
-                        docs_collection[d.id] = d.to_dict()
-
-            # 2. Fetch public templates
+        
+        # 1. Fetch user's routines
+        if creator_id:
             try:
-                q2 = db.collection(self.collection_name).where("is_public", "==", True).order_by("created_at", direction=firestore.Query.DESCENDING).limit(limit).stream()
-                for d in q2:
+                q1 = db.collection(self.collection_name).where(filter=firestore.FieldFilter("creator_id", "==", creator_id)).stream()
+                for d in q1:
                     docs_collection[d.id] = d.to_dict()
-            except Exception:
-                q2 = db.collection(self.collection_name).where("is_public", "==", True).stream()
-                for d in q2:
-                    docs_collection[d.id] = d.to_dict()
-            
-            # 3. Sort manually and apply pagination
-            sorted_docs = sorted(docs_collection.items(), key=lambda x: str(x[1].get("created_at", "")), reverse=True)
-            paginated = sorted_docs[skip : skip + limit]
-            
-            routines = [self.model(id=item[0], **item[1]) for item in paginated]
+            except Exception as e:
+                print(f"WARN: Error fetching routines for creator_id {creator_id}: {e}")
 
+        # 2. Fetch public templates
+        try:
+            q2 = db.collection(self.collection_name).where(filter=firestore.FieldFilter("is_public", "==", True)).stream()
+            for d in q2:
+                docs_collection[d.id] = d.to_dict()
         except Exception as e:
-            print(f"WARN: Merged query failed. Error: {e}")
-            routines = []
+            print(f"WARN: Error fetching public routines: {e}")
+        
+        # 3. Sort manually by created_at and apply pagination
+        sorted_docs = sorted(docs_collection.items(), key=lambda x: str(x[1].get("created_at", "")), reverse=True)
+        paginated = sorted_docs[skip : skip + limit]
+        
+        routines = [self.model(id=item[0], **item[1]) for item in paginated]
 
         results = []
         routine_map = {}

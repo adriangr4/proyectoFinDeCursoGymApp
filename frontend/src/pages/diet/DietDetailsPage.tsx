@@ -128,8 +128,8 @@ export function DietDetailsPage() {
         }
     };
 
-    if (loading) return <div className="min-h-screen flex items-center justify-center text-white">Cargando...</div>;
-    if (!diet) return <div className="min-h-screen flex items-center justify-center text-white">Dieta no encontrada</div>;
+    if (loading) return <div className="min-h-screen flex items-center justify-center text-foreground">Cargando...</div>;
+    if (!diet) return <div className="min-h-screen flex items-center justify-center text-foreground">Dieta no encontrada</div>;
 
     const isActive = user?.current_diet_id === id;
 
@@ -188,12 +188,12 @@ export function DietDetailsPage() {
     const deleteModal = dietToDelete && (
         <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/60 p-4 animate-in fade-in duration-200">
             <div className="bg-card w-full max-w-sm rounded-xl p-6 shadow-2xl border border-border">
-                <h3 className="text-xl font-bold mb-2 text-white">Eliminar Dieta</h3>
+                <h3 className="text-xl font-bold mb-2 text-foreground">Eliminar Dieta</h3>
                 <p className="text-muted-foreground mb-6">¿Estás seguro de que deseas eliminar esta dieta permanentemente?</p>
                 <div className="flex gap-3 justify-end">
                     <button
                         onClick={() => setDietToDelete(null)}
-                        className="px-4 py-2 rounded-lg font-medium hover:bg-muted transition-colors text-white"
+                        className="px-4 py-2 rounded-lg font-medium hover:bg-muted transition-colors text-foreground"
                     >
                         Cancelar
                     </button>
@@ -224,7 +224,7 @@ export function DietDetailsPage() {
     ) || 0;
 
     return (
-        <div className="w-full text-white p-6 pt-8">
+        <div className="w-full text-foreground p-6 pt-8">
             <header className="flex items-center gap-4 mb-8">
                 <button onClick={() => navigate(-1)} className="p-2 bg-card rounded-full hover:bg-muted transition-colors">
                     <ArrowLeft className="size-6" />

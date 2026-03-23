@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { LogOut, User as UserIcon, Settings, Trophy, Activity, ChevronRight, Edit2, Camera, PenLine, History, LayoutDashboard } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
+import { LogOut, User as UserIcon, Settings, Trophy, Activity, ChevronRight, Edit2, Camera, PenLine, History, LayoutDashboard, Moon, Sun } from 'lucide-react';
 import { LevelProgressBar } from '../../components/profile/LevelProgressBar';
 import { WorkoutHistoryList } from '../../components/profile/WorkoutHistoryList';
 import { getScheduledWorkouts, getScheduledWorkoutsCache } from '../../services/tracking';
@@ -12,6 +13,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export function ProfilePage() {
     const { user, logout, updateUser } = useAuth();
+    const { theme, toggleTheme } = useTheme();
     const navigate = useNavigate();
     // Initialize with CACHE
     const [dashboardStats, setDashboardStats] = useState<any>(getDashboardStatsCache());
@@ -119,7 +121,7 @@ export function ProfilePage() {
     };
 
     return (
-        <div className="w-full bg-transparent text-white">
+        <div className="w-full bg-transparent text-foreground">
             {/* Header */}
             <div className="p-6 pt-12 flex items-center justify-between relative">
                 <h1 className="text-3xl font-black italic tracking-tighter">
@@ -143,6 +145,19 @@ export function ProfilePage() {
                                 exit={{ opacity: 0, scale: 0.9, y: 10 }}
                                 className="absolute right-0 top-12 w-48 bg-card border border-border rounded-xl shadow-xl z-50 overflow-hidden"
                             >
+                                <button
+                                    onClick={() => {
+                                        toggleTheme();
+                                        setIsSettingsOpen(false);
+                                    }}
+                                    className="w-full flex items-center gap-3 px-4 py-3 text-foreground hover:bg-muted/50 transition-colors border-b border-border"
+                                >
+                                    {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+                                    <span className="font-medium text-sm">
+                                        {theme === 'dark' ? 'Modo Claro' : 'Modo Oscuro'}
+                                    </span>
+                                </button>
+                                
                                 <button
                                     onClick={handleLogout}
                                     className="w-full flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-500/10 transition-colors"
@@ -299,6 +314,18 @@ export function ProfilePage() {
                             {/* Menu Options */}
                             <div className="space-y-3">
                                 <p className="text-sm font-bold text-muted-foreground ml-1 mb-2">CUENTA</p>
+
+                                <Link to={`/community/user/${user?.id}`}>
+                                    <div className="w-full bg-card border border-border p-4 mb-3 rounded-2xl flex items-center justify-between group hover:border-primary transition-colors">
+                                        <div className="flex items-center gap-3">
+                                            <div className="p-2 bg-pink-500/10 rounded-lg text-pink-500">
+                                                <UserIcon className="size-5" />
+                                            </div>
+                                            <span className="font-medium">Mi Perfil Social</span>
+                                        </div>
+                                        <ChevronRight className="size-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                                    </div>
+                                </Link>
 
                                 <Link to="/profile/personal-data">
                                     <div className="w-full bg-card border border-border p-4 rounded-2xl flex items-center justify-between group hover:border-primary transition-colors">

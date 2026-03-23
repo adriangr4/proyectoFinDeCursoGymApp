@@ -68,7 +68,7 @@ export function PersonalDataPage() {
     };
 
     return (
-        <div className="w-full bg-transparent text-white p-6 pt-8">
+        <div className="w-full bg-transparent text-foreground p-6 pt-8">
             <div className="flex items-center gap-4 mb-8">
                 <button onClick={() => navigate(-1)} className="p-2 bg-card rounded-full hover:bg-muted transition-colors">
                     <ArrowLeft className="size-6" />

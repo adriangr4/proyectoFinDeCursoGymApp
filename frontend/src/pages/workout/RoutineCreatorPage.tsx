@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ExerciseSelector } from '../../components/workout/ExerciseSelector';
 import { createRoutine, type Routine, type DailyRoutine, type RoutineExercise } from '../../services/routines';
 import type { Exercise } from '../../services/exercises';
+import { ShareModal } from '../../components/social/ShareModal';
 
 export function RoutineCreatorPage() {
     const navigate = useNavigate();
@@ -12,6 +13,9 @@ export function RoutineCreatorPage() {
     const [activeDay, setActiveDay] = useState('Monday');
     const [isSelectorOpen, setIsSelectorOpen] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
+    const [shareModal, setShareModal] = useState<{ isOpen: boolean; routineId: string; routineName: string }>(
+        { isOpen: false, routineId: '', routineName: '' }
+    );
 
     const days = [
         { id: 'Monday', label: 'Lunes', short: 'L' },
@@ -69,7 +73,6 @@ export function RoutineCreatorPage() {
     const handleSave = async () => {
         if (!name.trim()) return alert("Por favor, ponle un nombre a la rutina.");
 
-        // Check if there's at least one exercise
         const hasExercises = weeklyPlan.some(d => d.exercises.length > 0);
         if (!hasExercises) return alert("Añade al menos un ejercicio a la rutina.");
 
@@ -80,8 +83,13 @@ export function RoutineCreatorPage() {
                 weekly_plan: weeklyPlan,
                 is_public: false
             };
-            await createRoutine(routineData);
-            navigate('/library'); // Redirect to library list
+            const created = await createRoutine(routineData);
+            // Offer to share the newly created routine
+            if (created?.id) {
+                setShareModal({ isOpen: true, routineId: created.id, routineName: name });
+            } else {
+                navigate('/library');
+            }
         } catch (error) {
             console.error("Error saving routine", error);
             alert("Error al guardar la rutina");
@@ -91,7 +99,17 @@ export function RoutineCreatorPage() {
     };
 
     return (
-        <div className="min-h-screen bg-transparent text-white pb-20">
+        <div className="min-h-screen bg-transparent text-foreground pb-20">
+            <ShareModal
+                isOpen={shareModal.isOpen}
+                contentType="routine"
+                contentId={shareModal.routineId}
+                contentName={shareModal.routineName}
+                onClose={() => {
+                    setShareModal({ isOpen: false, routineId: '', routineName: '' });
+                    navigate('/library');
+                }}
+            />
             <ExerciseSelector
                 isOpen={isSelectorOpen}
                 onClose={() => setIsSelectorOpen(false)}

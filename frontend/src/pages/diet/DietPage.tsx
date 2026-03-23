@@ -65,7 +65,7 @@ export function DietPage() {
     ];
 
     return (
-        <div className="w-full text-white p-6 pt-8">
+        <div className="w-full text-foreground p-6 pt-8">
             <header className="flex justify-between items-center mb-8">
                 <div>
                     <h1 className="text-3xl font-black italic">TU DIETA</h1>

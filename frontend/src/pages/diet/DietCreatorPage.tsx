@@ -7,6 +7,7 @@ import { useDebounce } from '../../hooks/useDebounce';
 
 import { GoalCalculatorModal } from '../../components/diet/GoalCalculatorModal';
 import { Calculator } from 'lucide-react';
+import { ShareModal } from '../../components/social/ShareModal';
 
 export function DietCreatorPage() {
     const navigate = useNavigate();
@@ -19,6 +20,9 @@ export function DietCreatorPage() {
     const debouncedSearchTerm = useDebounce(searchTerm, 500);
     const [searchResults, setSearchResults] = useState<any[]>([]);
     const [isSearching, setIsSearching] = useState(false);
+    const [shareModal, setShareModal] = useState<{ isOpen: boolean; dietId: string; dietName: string }>(
+        { isOpen: false, dietId: '', dietName: '' }
+    );
 
     // Diet State: Day -> MealType -> FoodList
     const [weeklyMeals, setWeeklyMeals] = useState<any>({
@@ -55,7 +59,8 @@ export function DietCreatorPage() {
                 const res = await api.get(`/diets/search?q=${encodeURIComponent(debouncedSearchTerm)}`);
                 setSearchResults(res.data);
             } catch (error) {
-                console.error("Search error", error);
+                console.error("Error searching food:", error);
+                alert("La base de datos de alimentos (OpenFoodFacts) está tardando demasiado en responder o está caída. Inténtalo más tarde.");
                 setSearchResults([]);
             } finally {
                 setIsSearching(false);
@@ -147,14 +152,19 @@ export function DietCreatorPage() {
         const randomImage = randomImages[Math.floor(Math.random() * randomImages.length)];
 
         try {
-            await api.post('/diets/', {
+            const response = await api.post('/diets/', {
                 name,
                 daily_calories_target: targetCalories,
-                meals: [], // Legacy empty
+                meals: [],
                 weekly_plan: weeklyPlanPayload,
                 image_url: randomImage
             });
-            navigate('/diet');
+            const created = response.data;
+            if (created?.id) {
+                setShareModal({ isOpen: true, dietId: created.id, dietName: name });
+            } else {
+                navigate('/diet');
+            }
         } catch (error) {
             console.error("Error saving diet", error);
             alert("Error al guardar la dieta");
@@ -162,7 +172,17 @@ export function DietCreatorPage() {
     };
 
     return (
-        <div className="w-full bg-transparent text-white p-6 pt-8">
+        <div className="w-full bg-transparent text-foreground p-6 pt-8">
+            <ShareModal
+                isOpen={shareModal.isOpen}
+                contentType="diet"
+                contentId={shareModal.dietId}
+                contentName={shareModal.dietName}
+                onClose={() => {
+                    setShareModal({ isOpen: false, dietId: '', dietName: '' });
+                    navigate('/diet');
+                }}
+            />
             {/* Header */}
             <div className="flex items-center gap-4 mb-6">
                 <button onClick={() => navigate(-1)} className="p-2 bg-card rounded-full hover:bg-muted transition-colors">

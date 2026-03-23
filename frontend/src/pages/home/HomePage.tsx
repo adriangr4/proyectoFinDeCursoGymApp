@@ -6,6 +6,7 @@ import { getDashboardStats, getDashboardStatsCache, type DashboardStats } from '
 import { getRoutines, getRoutinesCache } from '../../services/routines';
 import { getNutritionCache, setNutritionCache } from '../../services/nutrition';
 import { useAuth } from '../../context/AuthContext';
+import { TopHeader } from '../../components/layout/TopHeader';
 import api from '../../api/client';
 
 export function HomePage() {
@@ -92,26 +93,7 @@ export function HomePage() {
 
     return (
         <div className="w-full">
-            {/* Header */}
-            <header className="sticky top-0 z-30 flex items-center justify-between p-5 bg-background/90 backdrop-blur-md">
-                <Link to="/profile" className="flex items-center gap-3">
-                    <div className="relative">
-                        <div className="size-12 rounded-full bg-center bg-cover border-2 border-primary" style={{ backgroundImage: `url("${user?.profilePicture || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.username || 'Adrian'}`}")` }}></div>
-                        <div className="absolute bottom-0 right-0 size-3 bg-secondary rounded-full border-2 border-background"></div>
-                    </div>
-                    <div>
-                        <p className="text-xs text-muted-foreground font-medium">Buenos días,</p>
-                        <h2 className="text-xl font-bold leading-none tracking-tight">{user?.username || 'Adrian!'}</h2>
-                    </div>
-                </Link>
-                <button className="relative flex items-center justify-center size-10 rounded-full bg-card text-foreground hover:bg-muted transition-colors border border-border">
-                    <span className="sr-only">Notificaciones</span>
-                    <div className="size-2 bg-red-500 rounded-full absolute top-2 right-2.5"></div>
-                    {/* Replaced Material Symbol with Lucide equivalent or generic bell if mostly standard */}
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-bell"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" /><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" /></svg>
-                </button>
-            </header>
-
+            <TopHeader />
             {/* Daily Stats - Main Top Component */}
             <main className="flex flex-col gap-6 px-4 pt-6">
                 {/* Daily Summary Cards */}

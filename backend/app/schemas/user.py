@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 
 # Shared properties
@@ -14,7 +14,15 @@ class UserBase(BaseModel):
     current_diet_id: Optional[str] = None
     current_routine_id: Optional[str] = None # Added field
     height: Optional[int] = None # in cm
+    is_admin: bool = False
     # is_active: Optional[bool] = True # Removed to match DB model
+    # Social fields
+    followers_count: int = 0
+    following_count: int = 0
+    routine_rating_sum: float = 0.0
+    routine_rating_count: int = 0
+    diet_rating_sum: float = 0.0
+    diet_rating_count: int = 0
 
 # Properties to receive via API on creation
 class UserCreate(UserBase):
@@ -62,3 +70,17 @@ class WeightLog(WeightLogBase):
     class Config:
         from_attributes = True
 
+
+# --- PUBLIC PROFILE ---
+class PublicUserProfile(BaseModel):
+    id: str
+    username: str
+    profile_picture: Optional[str] = None
+    followers_count: int = 0
+    following_count: int = 0
+    routine_avg_rating: float = 0.0
+    diet_avg_rating: float = 0.0
+    is_following: bool = False
+
+    class Config:
+        from_attributes = True

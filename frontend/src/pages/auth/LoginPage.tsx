@@ -73,9 +73,9 @@ export function LoginPage() {
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/80 to-background z-0"></div>
             </div>
 
-            <div className="w-full max-w-sm space-y-8 animate-in fade-in zoom-in duration-500">
+            <div className="relative z-10 w-full max-w-sm space-y-8 animate-in fade-in zoom-in duration-500">
                 <div className="text-center space-y-2">
-                    <h1 className="text-4xl font-black tracking-tighter text-white">
+                    <h1 className="text-4xl font-black tracking-tighter text-foreground">
                         Gym<span className="text-primary">Track</span>
                     </h1>
                     <p className="text-muted-foreground">Tu progreso, tu ritmo, tu éxito.</p>
@@ -95,7 +95,7 @@ export function LoginPage() {
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full bg-card border border-border rounded-2xl px-4 py-3 text-white placeholder:text-muted-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                            className="w-full bg-card border border-border rounded-2xl px-4 py-3 text-foreground placeholder:text-muted-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                             placeholder="usuario@ejemplo.com"
                         />
                     </div>
@@ -108,7 +108,7 @@ export function LoginPage() {
                                 required
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full bg-card border border-border rounded-2xl px-4 py-3 text-white placeholder:text-muted-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all pr-12"
+                                className="w-full bg-card border border-border rounded-2xl px-4 py-3 text-foreground placeholder:text-muted-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all pr-12"
                                 placeholder="••••••••"
                             />
                             <button

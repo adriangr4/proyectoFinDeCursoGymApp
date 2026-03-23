@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.api.v1.endpoints import auth, users, routines, tracking, diet, social, nutrition, exercises
+from app.api.v1.endpoints import auth, users, routines, tracking, diet, social, nutrition, exercises, notifications
 
 api_router = APIRouter()
 api_router.include_router(auth.router, prefix="/auth", tags=["auth"])
@@ -10,4 +10,5 @@ api_router.include_router(tracking.router, prefix="/tracking", tags=["tracking"]
 api_router.include_router(diet.router, prefix="/diets", tags=["diet"])
 api_router.include_router(nutrition.router, prefix="/nutrition", tags=["nutrition"])
 api_router.include_router(social.router, prefix="/social", tags=["social"])
+api_router.include_router(notifications.router, prefix="/notifications", tags=["notifications"])
 api_router.include_router(auth.router, tags=["login"])

@@ -75,9 +75,9 @@ export function RegisterPage() {
                 <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 via-transparent to-secondary/5 z-0"></div>
             </div>
 
-            <div className="w-full max-w-sm space-y-8 animate-in fade-in zoom-in duration-500">
+            <div className="relative z-10 w-full max-w-sm space-y-8 animate-in fade-in zoom-in duration-500">
                 <div className="text-center space-y-2">
-                    <h1 className="text-4xl font-black tracking-tighter text-white">
+                    <h1 className="text-4xl font-black tracking-tighter text-foreground">
                         Crear <span className="text-secondary">Cuenta</span>
                     </h1>
                     <p className="text-muted-foreground">Únete a la comunidad GymTrack.</p>
@@ -97,7 +97,7 @@ export function RegisterPage() {
                             required
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            className="w-full bg-card border border-border rounded-2xl px-4 py-3 text-white placeholder:text-muted-foreground outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all"
+                            className="w-full bg-card border border-border rounded-2xl px-4 py-3 text-foreground placeholder:text-muted-foreground outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all"
                             placeholder="TuNombre"
                         />
                     </div>
@@ -109,7 +109,7 @@ export function RegisterPage() {
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full bg-card border border-border rounded-2xl px-4 py-3 text-white placeholder:text-muted-foreground outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all"
+                            className="w-full bg-card border border-border rounded-2xl px-4 py-3 text-foreground placeholder:text-muted-foreground outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all"
                             placeholder="usuario@ejemplo.com"
                         />
                     </div>
@@ -122,7 +122,7 @@ export function RegisterPage() {
                                 required
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full bg-card border border-border rounded-2xl px-4 py-3 text-white placeholder:text-muted-foreground outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all pr-12"
+                                className="w-full bg-card border border-border rounded-2xl px-4 py-3 text-foreground placeholder:text-muted-foreground outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all pr-12"
                                 placeholder="••••••••"
                             />
                             <button

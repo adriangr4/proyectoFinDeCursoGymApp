@@ -9,6 +9,7 @@ interface User {
     daily_calorie_goal?: number;
     current_routine_id?: string;
     current_diet_id?: string; // Added field
+    is_admin?: boolean;
 }
 
 interface AuthContextType {
@@ -45,7 +46,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             email: newUser.email,
             profilePicture: newUser.profile_picture || newUser.profilePicture || undefined,
             current_routine_id: newUser.current_routine_id || undefined,
-            current_diet_id: newUser.current_diet_id || undefined
+            current_diet_id: newUser.current_diet_id || undefined,
+            is_admin: newUser.is_admin || false
         };
 
         localStorage.setItem('token', newToken);
@@ -55,8 +57,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     const logout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        // Clear all gymtrack related cache keys including the ones for diets and routines
+        Object.keys(localStorage).forEach(key => {
+            if (key.startsWith('gymtrack_') || key === 'token' || key === 'user') {
+                localStorage.removeItem(key);
+            }
+        });
+        
         setToken(null);
         setUser(null);
     };

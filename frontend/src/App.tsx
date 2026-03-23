@@ -4,6 +4,7 @@ import { HomePage } from './pages/home/HomePage';
 import { LibraryPage } from './pages/library/LibraryPage';
 import { DietPage } from './pages/diet/DietPage';
 import { SocialPage } from './pages/social/SocialPage';
+import { PublicProfilePage } from './pages/social/PublicProfilePage';
 import { LoginPage } from './pages/auth/LoginPage';
 import { RegisterPage } from './pages/auth/RegisterPage';
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -22,7 +23,7 @@ import { DietDetailsPage } from './pages/diet/DietDetailsPage';
 
 function ProtectedRoute() {
   const { isAuthenticated, isLoading } = useAuth();
-  if (isLoading) return <div className="min-h-screen flex items-center justify-center bg-background text-white">Cargando...</div>;
+  if (isLoading) return <div className="min-h-screen flex items-center justify-center bg-background text-foreground">Cargando...</div>;
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
 }
 
@@ -39,6 +40,7 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/library" element={<LibraryPage />} />
               <Route path="/community" element={<SocialPage />} />
+              <Route path="/community/user/:userId" element={<PublicProfilePage />} />
               <Route path="/diet" element={<DietPage />} />
               <Route path="/diet/create" element={<DietCreatorPage />} />
               <Route path="/diet/:id" element={<DietDetailsPage />} />
